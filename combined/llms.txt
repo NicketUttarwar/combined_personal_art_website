@@ -20,6 +20,7 @@
 
 - [Sitemap](https://nicketuttarwar.com/sitemap.xml)
 - [Robots](https://nicketuttarwar.com/robots.txt)
+- Not found: custom [404](https://nicketuttarwar.com/404.html) page (`noindex`; used for bad URLs via CDN/server config)
 
 ## Profiles
 

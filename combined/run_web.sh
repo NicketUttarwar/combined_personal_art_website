@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
 # Serve the combined site: personal pages at / and the Uttarwar Art portfolio at /uttarwarart/
-# Builds data/uttarwarart/art-index.json from output_defaults, then starts a static server.
+# Builds uttarwarart/data/art-index.json from output_defaults, then starts a static server.
 
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$ROOT"
 
 ART_DIR="$ROOT/uttarwarart"
-if [[ -d "$ART_DIR" ]] && command -v node &>/dev/null; then
+BUILD_SCRIPT="$ART_DIR/scripts/build-art-index.js"
+if [[ -f "$BUILD_SCRIPT" ]] && command -v node &>/dev/null; then
   echo "Building art index..."
   (cd "$ART_DIR" && node scripts/build-art-index.js)
 else
-  echo "Skipping art index build (no uttarwarart/ or node not found)." >&2
+  echo "Skipping art index build (no build script or node not found)." >&2
 fi
 
 PORT="${PORT:-8080}"

@@ -13,6 +13,7 @@ PAGES = [
     "/art/",
     "/contact/",
     "/uttarwarart/",
+    "/404.html",
     "/robots.txt",
     "/sitemap.xml",
     "/llms.txt",

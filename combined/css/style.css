@@ -1383,3 +1383,64 @@ body.page-inner main {
 	.stat-value { font-size: 1.9rem; }
 	.stat-suffix { font-size: 1.25rem; }
 }
+
+/* Portfolio pages: native lazy images defer off-screen rendering (Uttarwar Art uses its own CSS) */
+main img[loading="lazy"] {
+	content-visibility: auto;
+}
+
+/* 404 — root-absolute URLs in 404.html; works for any missing path (S3/CloudFront/Nginx) */
+.page-404 .page-404-section {
+	padding-top: clamp(2rem, 8vh, 4rem);
+	padding-bottom: clamp(3rem, 12vh, 6rem);
+}
+.page-404-card {
+	max-width: 520px;
+	margin: 0 auto;
+	padding: clamp(1.75rem, 4vw, 2.5rem);
+	text-align: center;
+}
+.page-404-code {
+	font-family: var(--font-mono);
+	font-size: clamp(3rem, 10vw, 4.5rem);
+	font-weight: 700;
+	line-height: 1;
+	margin: 0 0 0.5rem;
+	color: var(--accent);
+	opacity: 0.9;
+	letter-spacing: -0.06em;
+}
+.page-404-title {
+	font-size: clamp(1.35rem, 3vw, 1.75rem);
+	margin: 0 0 0.75rem;
+	font-weight: 600;
+}
+.page-404-lead {
+	color: var(--text-muted);
+	margin: 0 0 1.5rem;
+	font-size: 1rem;
+	line-height: 1.6;
+}
+.page-404-visual {
+	margin: 0 auto 1.75rem;
+	max-width: 280px;
+	border-radius: var(--radius);
+	overflow: hidden;
+	border: 1px solid var(--glass-border);
+	box-shadow: 0 12px 40px var(--glass-shadow);
+}
+.page-404-image {
+	display: block;
+	width: 100%;
+	height: auto;
+	vertical-align: middle;
+	object-fit: cover;
+	aspect-ratio: 1;
+}
+.page-404-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	justify-content: center;
+	align-items: center;
+}

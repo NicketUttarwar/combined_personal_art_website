@@ -102,22 +102,59 @@
     }
     .title-overlay .back-to-main {
       pointer-events: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
       font-family: 'Outfit', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(232, 230, 227, 0.92);
-      border: 1px solid rgba(232, 230, 227, 0.28);
-      padding: 0.55rem 1rem;
+      color: rgba(232, 230, 227, 0.95);
+      border: 1px solid rgba(196, 181, 253, 0.45);
+      background: rgba(18, 18, 26, 0.75);
+      padding: 0.5rem 0.85rem 0.5rem 0.65rem;
       border-radius: 999px;
       text-decoration: none;
-      transition: background 0.25s ease, border-color 0.25s ease;
+      transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
       flex-shrink: 0;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
     }
     .title-overlay .back-to-main:hover {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(232, 230, 227, 0.45);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(196, 181, 253, 0.65);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    }
+    .title-overlay .back-to-main-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 50%;
+      background: rgba(196, 181, 253, 0.18);
+      border: 1px solid rgba(196, 181, 253, 0.4);
+      font-size: 0.95rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .title-overlay .back-to-main-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.15rem;
+      min-width: 0;
+    }
+    .title-overlay .back-to-main-name {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .title-overlay .back-to-main-sub {
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: none;
+      color: rgba(232, 230, 227, 0.72);
+      line-height: 1.25;
+      max-width: 16rem;
     }
     .progress-dots {
       display: flex;
@@ -198,6 +235,13 @@
       color: rgba(232, 230, 227, 0.5);
       margin-bottom: 0.2rem;
     }
+    .piece-label-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.5rem 1.25rem;
+      max-width: min(92vw, 56rem);
+    }
     .piece-label {
       transition: opacity 0.4s ease;
       font-family: 'Cormorant Garamond', serif;
@@ -205,6 +249,28 @@
       font-weight: 400;
       letter-spacing: 0.08em;
       opacity: 0.85;
+    }
+    .piece-label-note {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(0.62rem, 1.1vw, 0.72rem);
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.04em;
+      line-height: 1.45;
+      color: rgba(232, 230, 227, 0.62);
+      max-width: 28rem;
+      margin: 0;
+      padding: 0;
+      border-left: 2px solid rgba(196, 181, 253, 0.35);
+      padding-left: 0.75rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.35s ease;
+    }
+    .piece-label-note.is-visible {
+      font-style: italic;
+      opacity: 1;
+      visibility: visible;
     }
     #loading {
       position: fixed;
@@ -560,7 +626,13 @@
 
   <div id="canvas-wrap"></div>
   <div class="title-overlay">
-    <a href="../" class="back-to-main">Nicket Uttarwar</a>
+    <a href="../" class="back-to-main" aria-label="Nicket Uttarwar — go to portfolio home site" title="Go to the main portfolio website (home)">
+      <span class="back-to-main-indicator" aria-hidden="true">←</span>
+      <span class="back-to-main-text">
+        <span class="back-to-main-name">Nicket Uttarwar</span>
+        <span class="back-to-main-sub">Portfolio home — leave this art experience</span>
+      </span>
+    </a>
     <h1>Uttarwar Art</h1>
     <span class="hint">Scroll</span>
   </div>
@@ -577,7 +649,10 @@
   </div>
   <div class="piece-label-wrap">
     <p class="piece-label-doc">Current artwork</p>
-    <div class="piece-label" id="piece-label"></div>
+    <div class="piece-label-row">
+      <div class="piece-label" id="piece-label"></div>
+      <p class="piece-label-note" id="piece-label-note" hidden></p>
+    </div>
   </div>
   <div id="scroll-spacer"></div>
 

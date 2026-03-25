@@ -175,6 +175,15 @@ async function init() {
   const dotsAboutEl = document.getElementById('progress-dots-about');
   const dotsArtworksEl = document.getElementById('progress-dots-artworks');
   const labelEl = document.getElementById('piece-label');
+  const pieceLabelNoteEl = document.getElementById('piece-label-note');
+  /** Optional captions keyed by `food` from art-index.json */
+  const ARTWORK_NOTES_BY_FOOD = {
+    'Gulab jamun': 'Painted in Cincinnati, Ohio.',
+    'Bread pudding': 'Made with cousins & friends.',
+    'Irish coffee': 'Made with cousins.',
+    'High tea':
+      'The dog paw print is Junior’s — in Cupertino. The “collaboration” took place while the painting was drying in the garage.',
+  };
   const aboutLabels = ['Mumbai', 'London', 'San Francisco'];
   aboutLabels.forEach((label, i) => {
     const dot = document.createElement('div');
@@ -213,7 +222,7 @@ async function init() {
     const localScroll = artworkScroll < 0 ? 0 : artworkScroll - pieceIndex * segment;
     const t = clamp(localScroll / segment, 0, 1);
 
-    let phase, tPhase;
+    let phase; let tPhase;
     if (t < FLY_IN_RATIO) {
       phase = 'in';
       tPhase = t / FLY_IN_RATIO;
@@ -226,7 +235,16 @@ async function init() {
     }
 
     const totalHeight = getTotalScrollHeight();
-    return { pieceIndex, phase, tPhase: easeInOutCubic(tPhase), screenH, segment, scrollY, aboutHeightPx: aboutHeight(), totalHeight };
+    return {
+      pieceIndex,
+      phase,
+      tPhase: easeInOutCubic(tPhase),
+      screenH,
+      segment,
+      scrollY,
+      aboutHeightPx: aboutHeight(),
+      totalHeight,
+    };
   }
 
   function updateAboutSection(state) {
@@ -255,7 +273,7 @@ async function init() {
           : 1;
       }
       const dir = flyDir[i];
-      let x = 0, y = 0;
+      let x = 0; let y = 0;
       const off = 120; // percent off-screen
       if (dir === 'left') x = (1 - t) * -off;
       else if (dir === 'right') x = (1 - t) * off;
@@ -288,6 +306,18 @@ async function init() {
 
     const filenameStr = current.sourceFilename.replace(/_/g, ' ');
     labelEl.textContent = current.food ? `${filenameStr} — ${current.food}` : filenameStr;
+    if (pieceLabelNoteEl) {
+      const note = ARTWORK_NOTES_BY_FOOD[current.food];
+      if (note) {
+        pieceLabelNoteEl.textContent = note;
+        pieceLabelNoteEl.removeAttribute('hidden');
+        pieceLabelNoteEl.classList.add('is-visible');
+      } else {
+        pieceLabelNoteEl.textContent = '';
+        pieceLabelNoteEl.setAttribute('hidden', '');
+        pieceLabelNoteEl.classList.remove('is-visible');
+      }
+    }
     document.querySelectorAll('.progress-dots-artworks .dot').forEach((el, i) => {
       el.classList.toggle('active', i === pieceIndex);
     });
@@ -307,19 +337,19 @@ async function init() {
   function updateUIForSection(state) {
     const inAbout = state.pieceIndex < 0;
     const aboutCulture = getAboutCultureIndex(state);
-    const dotsAboutEl = document.getElementById('progress-dots-about');
-    const dotsArtworksEl = document.getElementById('progress-dots-artworks');
+    const dotsAboutElInner = document.getElementById('progress-dots-about');
+    const dotsArtworksElInner = document.getElementById('progress-dots-artworks');
     const pieceLabel = document.getElementById('piece-label');
-    if (dotsAboutEl) {
-      dotsAboutEl.style.opacity = '1';
-      dotsAboutEl.querySelectorAll('.dot').forEach((el) => {
+    if (dotsAboutElInner) {
+      dotsAboutElInner.style.opacity = '1';
+      dotsAboutElInner.querySelectorAll('.dot').forEach((el) => {
         const cultureIndex = parseInt(el.getAttribute('data-culture'), 10);
         el.classList.toggle('active', inAbout && cultureIndex === aboutCulture);
       });
     }
-    if (dotsArtworksEl) {
-      dotsArtworksEl.style.opacity = '1';
-      dotsArtworksEl.querySelectorAll('.dot').forEach((el, i) => {
+    if (dotsArtworksElInner) {
+      dotsArtworksElInner.style.opacity = '1';
+      dotsArtworksElInner.querySelectorAll('.dot').forEach((el, i) => {
         el.classList.toggle('active', !inAbout && i === state.pieceIndex);
       });
     }
@@ -329,10 +359,16 @@ async function init() {
       if (docLabel) docLabel.textContent = inAbout ? 'Section' : 'Current artwork';
       if (inAbout) pieceLabel.textContent = aboutCulture >= 0 ? aboutLabels[aboutCulture] : 'About';
     }
+    if (pieceLabelNoteEl && inAbout) {
+      pieceLabelNoteEl.textContent = '';
+      pieceLabelNoteEl.setAttribute('hidden', '');
+      pieceLabelNoteEl.classList.remove('is-visible');
+    }
   }
 
   function onScroll() {
     const state = getScrollState();
+
     updateAboutSection(state);
     updatePieces(state);
     updateUIForSection(state);
