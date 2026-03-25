@@ -1,11 +1,23 @@
 #!/usr/bin/env python3
 """Quick sanity check: all pages and main assets return 200."""
+import os
 import urllib.request
 import sys
 
-BASE = "http://127.0.0.1:8080"
-PAGES = ["/", "/about/", "/experience/", "/life/", "/art/", "/contact/"]
-ASSETS = ["/css/style.css", "/images/logo.png"]
+BASE = os.environ.get("BASE", "http://127.0.0.1:8080")
+PAGES = [
+    "/",
+    "/about/",
+    "/experience/",
+    "/life/",
+    "/art/",
+    "/contact/",
+    "/uttarwarart/",
+    "/robots.txt",
+    "/sitemap.xml",
+    "/llms.txt",
+]
+ASSETS = ["/css/style.css", "/images/logo.png", "/uttarwarart/data/art-index.json"]
 
 def main():
     ok = True

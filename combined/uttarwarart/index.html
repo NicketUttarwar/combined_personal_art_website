@@ -3,7 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Uttarwar Art — interactive 3D portfolio of culinary-inspired artwork by Nicket Uttarwar. Scroll experience; JSON index available for tools." />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://nicketuttarwar.com/uttarwarart/" />
+  <link rel="alternate" type="application/json" title="Artwork index (JSON)" href="data/art-index.json" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://nicketuttarwar.com/uttarwarart/" />
+  <meta property="og:title" content="Uttarwar Art — Portfolio" />
+  <meta property="og:description" content="Interactive 3D art portfolio — culinary journey and artworks by Nicket Uttarwar." />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Uttarwar Art — Portfolio" />
+  <meta name="twitter:description" content="Interactive 3D art portfolio — culinary journey and artworks by Nicket Uttarwar." />
   <title>Uttarwar Art — Portfolio</title>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebPage","name":"Uttarwar Art — Portfolio","url":"https://nicketuttarwar.com/uttarwarart/","description":"Interactive 3D portfolio of culinary-inspired artwork. Artwork metadata: /uttarwarart/data/art-index.json","inLanguage":"en-US","isPartOf":{"@id":"https://nicketuttarwar.com/#website"},"author":{"@id":"https://nicketuttarwar.com/#person"},"isAccessibleForFree":true}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;500&display=swap" rel="stylesheet" />
@@ -21,6 +36,25 @@
       background: #0a0a0b;
       color: #e8e6e3;
       overflow-x: hidden;
+    }
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      z-index: 10000;
+      padding: 0.75rem 1.25rem;
+      background: #12121a;
+      color: #e8e6e3;
+      border: 2px solid rgba(180, 140, 255, 0.85);
+      border-radius: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      font-family: 'Outfit', sans-serif;
+    }
+    .skip-link:focus {
+      left: 0.75rem;
+      top: 0.75rem;
+      position: fixed;
     }
     #canvas-wrap {
       position: fixed;
@@ -371,12 +405,16 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#culinary-carousel">Skip to main content</a>
+  <noscript>
+    <p style="padding:1rem 1.5rem;background:#12121a;color:#e8e6e3;font-family:'Outfit',sans-serif;line-height:1.6;max-width:52ch;margin:0 auto;">Uttarwar Art is an interactive portfolio; full experience uses JavaScript. For machine-readable artwork titles, food pairings, and file structure, use <a href="data/art-index.json" style="color:#c4b5fd;">art-index.json</a>. Return to <a href="../" style="color:#c4b5fd;">Nicket Uttarwar — main site</a>.</p>
+  </noscript>
   <div id="loading">
     <div class="spinner" aria-hidden="true"></div>
     <span class="text">Loading portfolio</span>
   </div>
 
-  <section id="culinary-carousel" aria-label="Culinary journey: kitchen tools">
+  <section id="culinary-carousel" tabindex="-1" aria-label="Culinary journey: kitchen tools">
     <div class="carousel-inner">
       <div class="carousel-track" id="carousel-track">
         <div class="carousel-slide">
